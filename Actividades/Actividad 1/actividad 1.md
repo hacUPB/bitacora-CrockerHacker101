@@ -28,5 +28,5 @@ Un programa es un conjunto de instrucciones escritas en un lenguaje de programac
 Un lenguaje ensamblador (Assembly) es un lenguaje de bajo nivel que traduce directamente a instrucciones comprensibles por la CPU, pero usando palabras clave simbolicas en lugar de solo números binarios. Es más entendible para los humanos que el lenguaje de máquina, pero sigue estando muy cerca del hardware.
 
 Ejemplo de una instrucción en ensamblador:
-```asm
-MOV AX, 5 ; Mueve el valor 5 al registro AX
+
+## MOV AX, 5 ; Mueve el valor 5 al registro AX
