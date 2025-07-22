@@ -30,3 +30,9 @@ Un lenguaje ensamblador (Assembly) es un lenguaje de bajo nivel que traduce dire
 Ejemplo de una instrucción en ensamblador:
 
 ## MOV AX, 5 ; Mueve el valor 5 al registro AX
+
+# Actividad 3  
+## ¿Qué son PC, D y A?  
+- **Personal Computer**: Computadora personal. Es un dispositivo electrónico usado por una sola persona a la vez, con capacidad para ejecutar programas, navegar por internet, jugar videojuegos, etc.
+
+
