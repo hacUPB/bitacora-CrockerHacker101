@@ -33,6 +33,13 @@ Ejemplo de una instrucción en ensamblador:
 
 # Actividad 3  
 ## ¿Qué son PC, D y A?  
-- **Personal Computer**: Computadora personal. Es un dispositivo electrónico usado por una sola persona a la vez, con capacidad para ejecutar programas, navegar por internet, jugar videojuegos, etc.
-
-
+- **Personal Computer**: Computadora personal. Es un dispositivo electrónico usado por una sola persona a la vez, con capacidad para ejecutar programas, navegar por internet, jugar videojuegos, etc.  
+- **A** = Acumulador  
+Nombre del registro: AX, EAX o RAX (dependiendo de si es de 16, 32 o 64 bits).
+Es el registro principal que se usa para operaciones aritméticas y lógicas. Se llama así porque históricamente era el que “acumulaba” resultados.  
+  
+- **D** = Data (registro de datos)    
+Nombre del registro: DX, EDX o RDX.  
+Se usa para operaciones que requieren un segundo registro junto con AX/EAX/RAX.  
+Por ejemplo:  
+En multiplicaciones y divisiones, DX se usa para almacenar parte del resultado (como el residuo).
