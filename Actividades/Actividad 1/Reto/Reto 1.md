@@ -92,7 +92,7 @@ son etiquetas que marcan posiciones en el código, para permitir saltos con inst
 - **¿Cuál es la diferencia entre los símbolos i y CONT?**  
 "i" es una variable y "CONT" una etiqueta  
 
-//punto 12 
+//punto 12   
 @R1  
 D=M  
 @R2  
