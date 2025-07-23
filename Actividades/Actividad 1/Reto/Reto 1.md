@@ -42,7 +42,7 @@ M=D
 D;JEQ  
 //  
 
-//7 punto
+//7 punto  
 @100  
 D=M  
 @100  
