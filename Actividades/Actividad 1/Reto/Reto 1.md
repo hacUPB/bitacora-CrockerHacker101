@@ -52,46 +52,15 @@ D;JLT
 //
 
 //punto 8
-@var1
-D=M
-@var2
-D=D+M
-@var3
-M=D
-//- **¿Que hace el Programa?**  
-este programa permite darle valores a las 3 variables y sumarlas en la RAM en R16 ya que R0-R15 ya estan ocupadas.  
-
-- **En qué posición de la memoria está var1, var2 y var3? ¿Por qué en esas posiciones?**  
-como lo dije previamente se guarda en las posiciones R16 para arriba, ya que, de R0 a R15 ya estan ocupadas por registros generales.  //
+//- **¿Que hace el Programa?**    
+este programa permite darle valores a las 3 variables y sumarlas en la RAM en R16 ya que R0-R15 ya estan ocupadas.    
+  
+- **En qué posición de la memoria está var1, var2 y var3? ¿Por qué en esas posiciones?**    
+como lo dije previamente se guarda en las posiciones R16 para arriba, ya que, de R0 a R15 ya estan ocupadas por registros generales.
+ //
 
 //punto 9
-(c++)
-i = 1
-sum = 0
-sum = sum + i
-i = i + 1
-
-La traducción a lenguaje ensamblador del programa anterior es:  
-
-(assembly)  
-// i = 1  
-@i  
-M=1  
-// sum = 0  
-@sum  
-M=0  
-// sum = sum + i  
-@i  
-D=M  
-@sum  
-M=D+M  
-// i = i + 1  
-@i  
-D=M+1  
-@i  
-M=D  
-  
-//
+ //
 - **¿Qué hace este programa?**   
 asigna valores en "i" como 1 y en "sum" como 2 despues los suma.  
 - **¿En qué parte de la memoria RAM está la variable i y sum? ¿Por qué en esas posiciones?**  
