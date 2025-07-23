@@ -42,3 +42,11 @@ M=D
 D;JEQ  
 //  
 
+//7 punto
+@100  
+D=M  
+@100  
+D=D-A  
+@20  
+D;JLT  
+
