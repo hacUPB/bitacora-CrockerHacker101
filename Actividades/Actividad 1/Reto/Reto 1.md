@@ -1,4 +1,3 @@
-
 //1 punto  
 @1978  
 D=A  
@@ -119,5 +118,120 @@ M=1
 //  
 
 //punto 14  
+@R1
+A=M
+D=M
+@R4
+M=D
+  
+//punto 15  
+@R0  
+D=M  
+@START  
+M=D  
+@R1  
+D=M  
+@END  
+M=D  
+@COUNT  
+M=0  
+(LOOP)  
+@COUNT  
+D=M  
+@END  
+D=D-M  
+@STOP  
+D;JEQ  
+@START  
+A=M  
+M=-1  
+@START  
+D=M  
+@1  
+D=D+1  
+@START  
+M=D  
+@COUNT  
+D=M  
+@1  
+D=D+1  
+@COUNT  
+M=D  
+@LOOP  
+0;JMP  
+(STOP)  
+@STOP  
+0;JMP  
+  
+//punto 16  
+@0  
+M=0  
+@0  
+D=A  
+@R1  
+M=D  
+(LOOP)  
+@R1  
+D=M  
+@10  
+D=D-A  
+@END  
+D;JGE  
+@R1  
+D=M  
+@200  
+A=D+A  
+D=M  
+@0  
+M=D+M  
+@R1  
+M=M+1  
+@LOOP  
+0;JMP  
+(END)  
+@END  
+0;JMP  
+
+//punto 17  
+@7
+D=D-A
+@69
+D;JEQ
+
+//punto 19  
+- **el codgo traducido seria:**  
+@16384  
+D=A  
+@16  
+M=D  
+@24576  
+D=A  
+@19  
+D=D-M  
+@16  
+D=A  
+@16384   
+D=D+M  
+@4  
+A=D+1  
+@16  
+M=D|A  
+D=0  
+@4  
+A=0  
+@16  
+D=A  
+@24576  
+D=D+M  
+@4  
+A=D-1  
+@16  
+M=D&A  
+D=!D  
+@16  
+M=D^A  
+@4  
+A=0
+- **¿Que hace este programa?**  
 
 
