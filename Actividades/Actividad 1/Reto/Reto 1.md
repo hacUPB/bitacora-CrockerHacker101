@@ -266,5 +266,10 @@ D=M
 D;JGT  
 @LOOP  
 0;JMP  
+  
+//punto 18
+<img width="1878" height="953" alt="image" src="https://github.com/user-attachments/assets/1619f1ea-55d4-4127-943c-db51399b5f37" />
+
+
 
 
