@@ -1,7 +1,7 @@
 //1 punto  
 @1978  
 D=A  
-//hola  
+//
 
 //2 punto  
 @69  
