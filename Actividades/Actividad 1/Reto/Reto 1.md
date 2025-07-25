@@ -193,45 +193,78 @@ M=M+1
 0;JMP  
 
 //punto 17  
-@7
-D=D-A
-@69
-D;JEQ
-
+@7  
+D=D-A  
+@69  
+D;JEQ  
+  
 //punto 19  
-- **el codgo traducido seria:**  
-@16384  
+- **Que hace este Programa?**  
+mientras mantienes presionada una tecla, se va llenando la memoria de la pantalla con -1 (píxeles encendidos) desde el inicio hacia el final; al soltarla, recorre en sentido inverso apagando esos pixeles, creando un efecto de “llenado/vaciado” de la pantalla controlado por el teclado.
+  
+//punto 20  
+@SCREEN  
 D=A  
-@16  
+@screenBase  
 M=D  
-@24576  
+(LOOP)  
+@KBD  
+D=M  
+@100  
+D=D-A  
+@DRAW  
+D;JEQ  
+@CLEAR  
+0;JMP  
+(DRAW)  
+@screenBase  
+D=M  
+@addr  
+M=D  
+@4  
 D=A  
-@19  
-D=D-M  
-@16  
+@rowCount  
+M=D  
+(DRAW_ROW)  
+@15  
 D=A  
-@16384   
-D=D+M  
-@4  
-A=D+1  
-@16  
-M=D|A  
-D=0  
-@4  
-A=0  
-@16  
+@addr  
+A=M  
+M=D  
+@addr  
+D=M  
+@32  
+D=D+A  
+@addr  
+M=D  
+@rowCount  
+M=M-1  
+D=M  
+@DRAW_ROW  
+D;JGT  
+@LOOP  
+0;JMP  
+(CLEAR)  
+@screenBase  
+D=M  
+@addr  
+M=D  
+@256  
 D=A  
-@24576  
-D=D+M  
-@4  
-A=D-1  
-@16  
-M=D&A  
-D=!D  
-@16  
-M=D^A  
-@4  
-A=0
-- **¿Que hace este programa?**  
+@clearCount  
+M=D  
+(CLEAR_LOOP)  
+@addr  
+A=M  
+M=0  
+@addr  
+M=M+1  
+@clearCount  
+M=M-1  
+D=M  
+@CLEAR_LOOP  
+D;JGT  
+@LOOP  
+0;JMP  
 
 
