@@ -268,7 +268,8 @@ D;JGT
 0;JMP  
   
 //punto 18
-<img width="1878" height="953" alt="image" src="https://github.com/user-attachments/assets/1619f1ea-55d4-4127-943c-db51399b5f37" />
+<img width="1593" height="951" alt="image" src="https://github.com/user-attachments/assets/135f03b6-79d8-4fbe-a1f7-ab878c4c2ee3" />
+
 
 
 
