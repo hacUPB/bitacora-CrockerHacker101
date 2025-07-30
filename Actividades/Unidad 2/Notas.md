@@ -14,4 +14,4 @@ para poner info en teclado es exactamente en la posición @KBD
 - me olvide de poner el codigo base de donde hice la solucion de la actividad 03 :,C, tengo que volverlo a hacer para poder presentarlo.
 
 - explicacion de punteros
-
+- realizar hasta el punto 5 del reto we ay nanita mis frijolitos we
