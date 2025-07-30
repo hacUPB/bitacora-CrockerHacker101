@@ -13,5 +13,5 @@ para poner info en teclado es exactamente en la posición @KBD
 # 30/07/2025  
 - me olvide de poner el codigo base de donde hice la solucion de la actividad 03 :,C, tengo que volverlo a hacer para poder presentarlo.
 
-- 
+- explicacion de punteros
 
