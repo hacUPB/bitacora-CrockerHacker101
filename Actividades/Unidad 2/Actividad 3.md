@@ -9,20 +9,20 @@ Actividad 3
   A=M
   D;JMP 
   y ponemos este código: 
-  // Borrar la pantalla
-  @SCREEN
-  D=A
-  @0
-  M=D
-  @8192
-  D=A
-  @R1
-  M=D
-  (BORRAR_PANTALLA)
-  @R0
-  A=M
-  M=0
-  @R0
+  // Borrar la pantalla  
+  @SCREEN  
+  D=A  
+  @0  
+  M=D  
+  @8192  
+  D=A  
+  @R1  
+  M=D  
+  (BORRAR_PANTALLA)  
+  @R0  
+  A=M  
+  M=0  
+  @R0  
   M=M+1
   @R1
   M=M-1
