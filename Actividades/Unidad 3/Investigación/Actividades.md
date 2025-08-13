@@ -1,9 +1,9 @@
 # Actividad 02
 
 ### 1 Qué fue lo que incluimos en el archivo `.h`?
-En `ofApp.h` se incluyó:
+En ofApp.h se incluyó:
 
-- `include "ofMain.h"` → Trae todo lo necesario para trabajar con **openFrameworks** (ventanas, dibujo, eventos, colores, etc.)  
+- `include "ofMain.h"  Trae todo lo necesario para trabajar con **openFrameworks** (ventanas, dibujo, eventos, colores, etc.)  
 - La clase `ofApp` que hereda de `ofBaseApp`, donde declaramos:  
   - **Funciones del ciclo de la app:** `setup()`, `update()`, `draw()`.  
   - **Funciones de interacción:** `mouseMoved()`, `mousePressed()`.  
@@ -44,4 +44,51 @@ Aquí normalmente iría la lógica de actualización de variables o física del 
 - Recorre cada posición guardada en particles.
 - Establece el color actual (particleColor).
 - Dibuja un círculo de radio 50 en esa posición. Esto se repite en cada frame, manteniendo el dibujo en pantalla.
+
+# Actividad 03  
+
+<img width="1919" height="1032" alt="sol" src="https://github.com/user-attachments/assets/f58985b7-a95f-42b0-8ca4-cfc21651b7f0" />  
+
+Codigo  
+```c++
+#include "ofApp.h"
+
+//--------------------------------------------------------------
+void ofApp::setup() {
+	ofBackground(255);
+	particleColor = ofColor::yellow;
+}
+
+//--------------------------------------------------------------
+void ofApp::update() {
+}
+
+//--------------------------------------------------------------
+void ofApp::draw() {
+	for (auto & pos : particles) {
+		ofSetColor(particleColor);
+		ofDrawLine(pos.x , pos.y, 100, 100);
+		ofDrawCircle(100, 100, 50);
+	}
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseMoved(int x, int y) {
+	particles.push_back(ofVec2f(x, y));
+	if (particles.size() > 100) {
+		particles.erase(particles.begin());
+	}
+}
+
+//--------------------------------------------------------------
+void ofApp::mousePressed(int x, int y, int button) {
+	particleColor = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
+}
+```
+
+### Actividad 04  
+
+video bonito  
+
+### Actividad 05  
 
