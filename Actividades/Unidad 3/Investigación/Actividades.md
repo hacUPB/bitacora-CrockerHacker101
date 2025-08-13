@@ -86,9 +86,13 @@ void ofApp::mousePressed(int x, int y, int button) {
 }
 ```
 
-### Actividad 04  
+# Actividad 04  
 
 video bonito  
 
-### Actividad 05  
+# Actividad 05  
+
+### 2. el puntero es el circulito morado que nos da el codigo dado
+
+
 
