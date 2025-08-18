@@ -92,7 +92,64 @@ video bonito
 
 # Actividad 05  
 
-### 2. el puntero es el circulito morado que nos da el codigo dado
+### 1. ¿Cuál es la definición de un puntero?
 
+Un puntero es una variable que almacena la direccion de memoria de otra variable u objeto, en lugar de almacenar directamente el valor.
+Es decir, un puntero “apunta” a un espacio en memoria donde esta guardado un dato u objeto.
+
+### 2. el puntero es el circulito morado que nos da el codigo dado
+En este código hay dos lugares importantes donde se usan punteros:
+- En el vector de esferas:  
+  
+´vector<Sphere*> spheres;´  
+Aquí cada elemento del vector es un puntero a un objeto de tipo Sphere.  
+
+- En la esfera seleccionada:
+
+´Sphere* selectedSphere;´  
+
+### 3. ¿Cómo se inicializa el puntero?  
+
+- En setup(), las esferas se crean dinámicamente con new y se guardan en el vector de punteros:  
+
+´spheres.push_back(new Sphere(x, y, radius));´
+
+Esto asigna memoria en el heap y retorna un puntero a esa esfera.
+
+- El puntero selectedSphere se inicializa como nullptr (es decir, que no apunta a nada al inicio):  
+
+´selectedSphere = nullptr;´  
+
+### 4.¿Para qué se está usando el puntero?  
+El puntero sirve para poder mover y modificar una esfera en específico sin necesidad de copiar el objeto completo, cuando seleccionas una esfera con el mouse, el puntero selectedSphere apunta a esa esfera dentro del vector. Luego, en ´update()´, se mueve esa esfera:  
+```cpp
+if (selectedSphere != nullptr) {
+    selectedSphere->update(ofGetMouseX(), ofGetMouseY());
+}
+```
+
+### 5. ¿Qué es exactamente lo que está almacenado en el puntero?  
+
+Este puntero almacena la direccion de memoria (Sphere), este no guarda la esfera directamente, sino su ubicacion en la RAM  
+
+# Actividad 06   
+Una vez que haces clic sobre una esfera, selectedSphere queda apuntando a ella y sigue moviéndose incluso después de soltar el mouse, Eso significa que el código no está liberando la selección cuando sueltas el mouse.
+
+R//
+debes organizar tambien mouseReleased y reiniciar el puntero cuando el botón se suelte:
+
+En ofApp.h ponemos:  
+```
+void mouseReleased(int x, int y, int button);
+```
+
+En ofApp.cpp ponemos:
+```
+void ofApp::mouseReleased(int x, int y, int button){
+    if(button == OF_MOUSE_BUTTON_LEFT){
+        selectedSphere = nullptr;  // Deja de mover la esfera al soltar
+    }
+}
+```
 
 
