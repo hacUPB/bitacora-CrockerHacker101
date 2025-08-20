@@ -152,4 +152,118 @@ void ofApp::mouseReleased(int x, int y, int button){
 }
 ```
 
+# Actividad 07 
 
+### 1. ¿Qué sucede cuando presionas la tecla “c”?  
+Se crea un objeto llamado Sphere  en la pila (Stack), luego se guarda su dirección (&localSphere) dentro del vector globalVector, esto es un problema porque en cuanto la función termina, localSphere deja de existir: la memoria usada para él es liberada automáticamente. Despues intentamos acceder a ese puntero almacenado en globalVector, estamos apuntando a memoria inválida, esto se llama dangling pointer.
+El comportamiento resultante es indefinido: puede que veas datos corruptos, posiciones raras, o incluso que el programa se bloquee.
+
+Al cambiar unas cositas 
+¿Qué sucede cuando presionas la tecla “c”?  
+Ahora el objeto se crea en el montón (heap) con new, a diferencia del stack, los objetos en el heap permanecen en memoria hasta que se liberen manualmente con delete, Esto significa que aunque termine la función, el objeto sigue existiendo y globalVector almacena un puntero válido a él.  
+
+Así, al dibujar (sphere=draw()), realmente se visualiza la esfera sin errores ni corrupción de memoria.
+
+### 2. ¿Por qué ocurre esto?  
+Stack (pila):  
+La memoria se gestiona automáticamente cuando sales de la función, los objetos locales desaparecen, guardar un puntero a un objeto local = puntero colgante (dangling pointer) → comportamiento indefinido.
+
+Heap (montón):  
+La memoria se gestiona manualmente, los objetos creados con new sobreviven más allá del alcance de la función y el puntero sigue siendo válido después de salir de la función.  
+
+# Actividad 08  
+```
+/ ofApp.h
+#pragma once
+#include "ofMain.h"
+
+class Sphere {
+public:
+    Sphere(float x, float y, float radius) {
+        this->x = x;
+        this->y = y;
+        this->radius = radius;
+    }
+
+    void draw() const {
+        ofDrawCircle(x, y, radius);
+    }
+
+    float x, y, radius;
+};
+
+
+static Sphere globalSphere(100, 100, 50);
+
+class ofApp : public ofBaseApp {
+public:
+    void setup();
+    void update();
+    void draw();
+
+    Sphere* heapSphere;
+
+    Sphere stackSphere = Sphere(300, 100, 50);
+};
+```
+```
+// ofApp.cpp
+#include "ofApp.h"
+
+void ofApp::setup(){
+
+    heapSphere = new Sphere(500, 100, 50);
+}
+
+void ofApp::update(){
+}
+
+void ofApp::draw(){
+    // Dibujar esfera global
+    ofSetColor(ofColor::red);
+    globalSphere.draw();
+
+    // Dibujar esfera en stack
+    ofSetColor(ofColor::green);
+    stackSphere.draw();
+
+    // Dibujar esfera en heap
+    ofSetColor(ofColor::blue);
+    heapSphere->draw();
+}
+```
+COmo funciona?
+Memoria Global
+- globalSphere está declarado fuera de la clase  
+- Existe desde que inicia el programa hasta que termina  
+- Se usa para variables constantes o que deben estar accesibles en todo el programa  
+- Ejemplo típico: configuraciones globales, constantes, recursos compartidos  
+
+Stack (pila)
+- stackSphere se guarda dentro de la clase ofApp vive mientras exista el objeto ofApp  
+- Si la variable se declara dentro de una función local, solo vive dentro de esa función  
+- Ventaja: gestión automatica, desaparece al salir de la función  
+- Se usa para variables temporales o de corta vida  
+
+Heap (montículo)
+- heapSphere se crea con new  
+- Vive hasta que hagamos delete heapSphere; 
+- El programador controla su ciclo de vida  
+- Se usa para objetos grandes o que deben persistir más allá de la función que los crea  
+
+¿Cuándo debo usar cada uno?
+
+Heap
+- Cuando el objeto es grande y no quieres saturar el stack  
+- Cuando necesitas que viva más allá del alcance de la función que lo crea  
+- Cuando la cantidad de objetos se desconoce en tiempo de compilación y se crean dinámicamente  
+
+Memoria Global
+- Cuando el objeto debe existir durante toda la ejecución.  
+- Cuando lo necesitan varias partes del programa (aunque en buenas prácticas modernas, se prefiere usar static dentro de funciones o singletons)  
+
+Stack
+- Para objetos pequeños y temporales  
+- Para cosas que se destruyen automáticamente al salir de la función
+
+# Actividad 09  
