@@ -266,4 +266,36 @@ Stack
 - Para objetos pequeños y temporales  
 - Para cosas que se destruyen automáticamente al salir de la función
 
-# Actividad 09  
+# Actividad 09   
+
+### 1.  
+Cuando presionas la tecla f, el programa elimina el último punto que hayas creado con el mouse (el más reciente) y libera la memoria asociada a ese punto. En el próximo draw() ese círculo azul (y su texto “Heap Memory”) ya no se dibuja. Si no hay puntos, no hace nada.  
+```
+if(!heapObjects.empty()) {
+    delete heapObjects.back();
+    heapObjects.pop_back();
+}
+```
+- if(!heapObjects.empty()): evita operar sobre un vector vacío.  
+- delete heapObjects.back();: libera la memoria del último puntero del vector (el ofVec2f* que se creó con new en mousePressed). Esto previene fugas de memoria.  
+- heapObjects.pop_back();: quita ese puntero del vector. Así no queda un puntero colgante dentro del contenedor.  
+- Importante: el orden es correcto. Primero delete, luego pop_back(). Si hicieras pop_back() primero, perderías la referencia y no podrías liberar esa memoria (fuga).
+
+### 2. Analisis del codgo:  
+```
+if(!heapObjects.empty()) {
+    delete heapObjects.back();
+    heapObjects.pop_back();
+}
+```
+"if(!heapObjects.empty())"
+— Comprueba si el std::vector heapObjects no está vacío. empty() devuelve true cuando el vector tiene 0 elementos. Esta comprobación evita acceder a back() cuando el vector está vacío (lo cual sería UB).  
+"heapObjects.back()"  
+— Devuelve una referencia al último elemento del vector. En tu caso heapObjects es vector<ofVec2f*>, así que back() devuelve el último ofVec2f*.  
+"delete heapObjects.back();"  
+— Llama a delete sobre ese puntero: invoca el destructor del objeto apuntado (si existe) y libera la memoria asignada con new.  
+— delete nullptr es seguro (no hace nada).  
+— IMPORTANTE: esto sólo es correcto si el puntero fue creado con new (no con new[], ni apunta a objeto en stack, ni es alias de otra memoria manejada por otro propietario).  
+"heapObjects.pop_back();"  
+— Elimina el último elemento del vector (la entrada ofVec2f*). No llama a delete por sí mismo —por eso se hace delete antes— y es una operación O(1). Después de pop_back() ese puntero ya no está en el vector.  
+
