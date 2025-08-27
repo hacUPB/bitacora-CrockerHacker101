@@ -1,1 +1,10 @@
-gohoa
+# Reto
+
+### Actividad 02  
+En que lugar se guardan Los datos clave del codigo?:  
+
+- las variables como x, y, z se guardan en **stack**.  
+- el contenido de ofVec3 se guarda en **Heap**.  
+- y **sphereposition** tambian se guarda en **Heap**.  
+- para reservar memoria se hace un **push_back** y se reserva mas espacio se se necesita.
+- para liberar memoria al terminar el **ofApp** se borra para liberar espacio en la memoria para que no explote el pecerdo.
