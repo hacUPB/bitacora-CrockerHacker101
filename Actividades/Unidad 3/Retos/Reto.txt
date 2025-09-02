@@ -11,20 +11,6 @@ En que lugar se guardan Los datos clave del codigo?:
 
 ### Actividad 03
 
-video del codigo en funcionamiento
+video del codigo en funcionamiento  
 
-### **punto 3**  
-
-¿Qué pasa si no llamamos a clear() en el destructor de LinkedList? ¿Qué problema puede ocurrir?
-R/ este no se eliminan los puntitos que dejamos ahi, por lo que se llenaria de puros puntitos toda la panatalla
-
-¿Por qué addNode incrementa el tamaño size de la lista? ¿Para qué sirve esta variable?
-
-En la función update, ¿por qué usamos las variables temporales prevX y prevY? Explica qué ocurre con las posiciones de los nodos cuando actualizamos la serpiente.
-
-¿Qué sucede si presionamos la tecla 'c' mientras el programa está corriendo? ¿Cómo afecta esto a la serpiente?
-
-¿Cómo se asegura el programa de que no haya nodos huérfanos (nodos que no se liberan) al eliminar la lista?
-
-¿Qué sucede si intentas llamar a addNode después de llamar a clear()? ¿La lista sigue funcionando correctamente? ¿Por qué?
-
+https://www.youtube.com/watch?v=aV3RofqHc1E
