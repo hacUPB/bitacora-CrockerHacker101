@@ -103,3 +103,101 @@ En C#, existe un garbage collector que libera memoria automáticamente.
 - Con el depurador de Visual Studio, puedes poner puntos de interrupción y ver en tiempo real cómo cambian head, tail, size y los punteros de los nodos.
 
   
+
+# Actividad 2  
+
+### 1: Entendiendo la aplicación:  
+Clase Node:
+
+```
+class Node {
+public:
+    ofVec2f position;
+    Node* next;
+
+    Node(float x, float y) {
+        position.set(x, y);
+        next = nullptr;
+    }
+};
+```
+
+Propósito: Representar un nodo individual en la pila.  
+Atributos:
+- position — guarda la posición 2D (x,y) donde se dibujará un círculo.  
+- next — puntero al siguiente nodo en la pila (conexión en la lista enlazada).  
+Constructor: Inicializa la posición con los valores x y y recibidos y deja next en nullptr porque cuando se crea un nodo no tiene siguiente aún.
+
+Clase Stack
+```
+class Stack {
+public:
+    Node* top;
+
+    Stack() {
+        top = nullptr;
+    }
+
+    ~Stack() {
+        clear();
+    }
+
+    void push(float x, float y) {
+        Node* newNode = new Node(x, y);
+        newNode->next = top;
+        top = newNode;
+    }
+
+    void pop() {
+        if (top != nullptr) {
+            Node* temp = top;
+            top = top->next;
+            delete temp;
+        }
+    }
+
+    void clear() {
+        while (top != nullptr) {
+            pop();
+        }
+    }
+
+    void display() {
+        Node* current = top;
+        while (current != nullptr) {
+            ofDrawCircle(current->position.x, current->position.y, 20);
+            current = current->next;
+        }
+    }
+};
+```
+
+Atributos:
+- top — puntero al nodo que está en la cima de la pila (último insertado).  
+- Constructor: Inicializa top a nullptr (pila vacía).  
+- Destructor: Llama a clear() para eliminar todos los nodos y liberar memoria.  
+push(x, y):
+Crea un nuevo nodo con la posición dada, el nuevo nodo apunta hacia el nodo que estaba en la cima (newNode->next = top).  
+Actualiza top para que apunte al nuevo nodo, Esto significa que el nuevo nodo se convierte en el primero en la pila.
+
+pop():
+
+Si la pila no está vacía (top != nullptr):
+
+Guarda temporalmente el nodo actual en temp.
+
+Actualiza top para apuntar al siguiente nodo (top = top->next).
+
+Elimina el nodo antiguo (delete temp), liberando memoria.
+
+Esto remueve el nodo de la cima de la pila.
+
+clear():
+
+Mientras la pila no esté vacía, hace pop() repetidamente para liberar todos los nodos.
+
+display():
+
+Recorre desde top hasta el final (nullptr).
+
+Para cada nodo, dibuja un círculo en la posición almacenada (ofDrawCircle).
