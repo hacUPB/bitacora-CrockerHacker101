@@ -47,4 +47,12 @@ p1 es un objeto de la clase Particle.
 
 - Tiene sus propios valores para x e y.  
 - Puedes usar el método move para modificar esos valores.  
-- Cada objeto tiene su propio conjunto de atributos independientes de otros objetos.  "
+- Cada objeto tiene su propio conjunto de atributos independientes de otros objetos."  
+
+### Reflexión guida  
+
+ 
+<img width="1113" height="627" alt="C__Users_B09S115est_Downloads_of_v0 12 1_vs_64_release_apps_myApps_mySketch_bin_mySketch_debug exe 15_09_2025 5_28_22 p  m" src="https://github.com/user-attachments/assets/d4ace67c-9602-447a-a69e-a3630a9e6d87" />
+
+
+
