@@ -184,20 +184,76 @@ pop():
 
 Si la pila no está vacía (top != nullptr):
 
-Guarda temporalmente el nodo actual en temp.
-
-Actualiza top para apuntar al siguiente nodo (top = top->next).
-
-Elimina el nodo antiguo (delete temp), liberando memoria.
-
-Esto remueve el nodo de la cima de la pila.
+Guarda temporalmente el nodo actual en temp.  
+Actualiza top para apuntar al siguiente nodo (top = top->next).  
+Elimina el nodo antiguo (delete temp), liberando memoria.  
+Esto remueve el nodo de la cima de la pila.  
 
 clear():
 
 Mientras la pila no esté vacía, hace pop() repetidamente para liberar todos los nodos.
 
+
 display():
-
 Recorre desde top hasta el final (nullptr).
-
 Para cada nodo, dibuja un círculo en la posición almacenada (ofDrawCircle).
+
+# Preguntas de reflexión para el stack:
+
+## 1. ¿Cómo se gestiona la memoria en una implementación manual de un stack en C++?
+En la implementación manual del stack, cada nodo se crea dinámicamente con `new` y se libera con `delete`.  
+Esto significa que el programador es responsable de gestionar la memoria, lo que ofrece flexibilidad pero también riesgos.  
+Si se olvida liberar memoria, ocurren fugas. Además, el uso frecuente de `new` y `delete` puede afectar el rendimiento, ya que el sistema debe asignar y liberar bloques de memoria muchas veces.
+
+
+## 2. ¿Por qué es importante liberar la memoria cuando se desapila un nodo en un stack?
+Al desapilar, si no se llama a `delete` sobre el nodo, este sigue ocupando memoria aunque ya no sea accesible.  
+Esto provoca fugas de memoria, que en programas de larga duración (como instalaciones artísticas o simulaciones) pueden consumir toda la RAM y hacer que la aplicación falle.  
+Liberar memoria mantiene el programa seguro, eficiente y estable.
+
+### 3. ¿Qué diferencias existen entre usar un stack de la STL (std::stack) y crear un stack manualmente?
+- **`std::stack` (STL)**  
+  - Maneja automáticamente la memoria.  
+  - Más seguro y confiable para producción.  
+  - Menos control sobre los detalles internos.  
+
+- **Stack manual (como en el código)**  
+  - El programador controla la estructura interna (enlaces, nodos, etc.).  
+  - Permite personalizar el comportamiento (ej. dibujar nodos en arte generativo).  
+  - Mayor riesgo de errores de memoria.  
+
+En conclusión: STL simplifica, manual da control.
+
+
+### 4. ¿Cómo afecta la estructura de un stack al orden de acceso y eliminación de elementos?
+Un stack sigue el modelo **LIFO (Last In, First Out)**.  
+Esto significa que el último elemento en entrar es el primero en salir.  
+Este comportamiento es útil en problemas como:
+- Manejo de deshacer (Ctrl+Z).  
+- Evaluación de expresiones matemáticas.  
+- Recorrido en profundidad (DFS).  
+
+En el código de arte generativo, esto se refleja en que el último círculo apilado es el primero en desaparecer.
+
+
+### 5. ¿Cómo podrías modificar el stack para almacenar tipos de datos más complejos?  
+Se puede modificar el `Node` para que almacene objetos con múltiples atributos, por ejemplo:
+
+```cpp
+class Node {
+public:
+    MyCustomObject data; // objeto complejo
+    Node* next;
+
+    Node(const MyCustomObject& obj) : data(obj), next(nullptr) {}
+};
+```
+En este caso hay que considerar:
+
+- Usar constructores y destructores adecuados para evitar fugas  
+- Si los objetos usan memoria dinámica internamente, asegurarse de copiar o moverlos correctamente (constructor de copia/movimiento).  
+- Si se usan punteros, emplear smart pointers (std::unique_ptr, std::shared_ptr) para evitar fugas de memoria.  
+
+Esto haría el stack más flexible sin comprometer la seguridad.
+
+
