@@ -87,7 +87,83 @@ En este caso los datos NO afectan al tamaño de la instancia, lo que afecta al t
 - En el objeto solo está el puntero (sí cuenta en el sizeof).  
 - La memoria reservada con new vive aparte en el heap, no dentro del objeto.  
 
+### Reflexión  
 
+Objeto en memoria:  
+es un bloque que guarda los atributos propios de la clase, solo contiene variables de instancia y punteros si hay memoria dinamica.
 
+Influencia de atributos y métodos:  
+- Normales: ocupan espacio en cada objeto.  
+- Estáticos: no ocupan espacio en el objeto, hay una sola copia global.  
+- Dinámicos: solo se guarda el puntero en el objeto; la memoria real está en el heap.  
+- Métodos: no afectan el tamaño, se comparten entre instancias.  
 
+Conclusión:  
+El tamaño de un objeto depende de sus atributos de instancia y punteros, no de los estáticos ni métodos. Esto impacta el diseño de clases porque obliga a decidir cuándo usar memoria compartida (estática), propia (normal) o flexible (dinámica)
 
+# Seccion 2
+
+### ¿Dónde se almacenan los datos y métodos de una clase en C++ en la memoria? Explica el concepto de vtable y cómo se relaciona con los métodos virtuales.  
+
+- los datos en c++ se guardan en la memoria como parte de cada objeto (heap, stack). Si se guarda en "Stack" se almacena en la pila, si se guarda como "new" en "heap"  se guarda en el monton.  
+- los metodos no se almacenan en un objeto, todos los objetos llaman a la misma función, pasando de manera implícita el puntero this que apunta al objeto que invoca la función.  
+- al usar los métodos virtuales, entra en juego un mecanismo especial: la tabla virtual (vtable).
+
+¿Qué es la vtable?:   
+es una tabla (array interno generado por el compilador) que guarda punteros a funciones virtuales de la clase, cada clase que tenga al menos un método virtual tiene su propia vtable, en cada objeto de esa clase, el compilador coloca un puntero oculto llamado vptr que apunta a la vtable de la clase.  
+¿Cómo funciona?:  
+cuando llamas a un método no virtual, la llamada se resuelve en tiempo de compilación (estática), cuando llamas a un método virtual, el compilador busca en el vtable a través del puntero vptr para saber qué función ejecutar (despacho dinámico).
+
+***Tambien se puede usar vptr*** 
+
+vptr (puntero virtual) es un puntero oculto que el compilador añade automáticamente en cada objeto de una clase con métodos virtuales.  
+cada objeto tiene un vptr, ese vptr apunta a la vtable de su clase, cuando llamas a un método virtual, el programa sigue este puntero para consultar en la vtable cuál función debe ejecuta
+
+### Exploración de métodos virtuales  
+
+#### ¿Cómo afecta la presencia de métodos virtuales al tamaño del objeto?  
+
+cuando una clase no tiene métodos virtuales, su objeto contiene únicamente sus atributos de datos y cuando una clase tiene métodos virtuales, el compilador usamos el vptr.    
+este puntero apunta a la vtable (virtual table) correspondiente a la clase. El tamaño del objeto aumenta en, al menos, el tamaño de un puntero (4 bytes en sistemas de 32 bits, 8 bytes en sistemas de 64 bits).  
+
+- b ocupa tamaño = sizeof(Base) = vptr + atributos (si tuviera).  
+- d ocupa tamaño = sizeof(Derived) = vptr + atributos (si tuviera).  
+
+#### ¿Qué papel juegan las vtables en el polimorfismo?  
+
+La vtable es una tabla generada por el compilador que guarda direcciones de funciones virtuales para cada clase y cada clase con metodos virtuales tiene su propia vtable.  
+Cada objeto tiene un vptr que apunta a la vtable de su clase.
+
+- "b.vptr" apunta a la vtable de Base, que contiene la dirección de Base::display
+- "d.vptr"  apunta a la vtable de Derived, que contiene la dirección de Derived::display
+
+#### Según chajepete:   
+
+Es una tabla de punteros a funciones generada por el compilador para cada clase que contiene métodos virtuales, cada clase que tiene métodos virtuales mantiene una vtable única, con entradas que apuntan a las implementaciones actuales de esos métodos, cada objeto de una clase con virtuales guarda un puntero oculto, llamado vptr (virtual table pointer), que apunta a la vtable de su clase.  
+
+¿Cómo funcionan los métodos virtuales y la vtable?   
+- Declaración del método virtual: Cuando declaras un método como virtual en una clase base, le indicas al compilador que esta función puede ser anulada por las clases derivadas.  
+Creación de la vtable:   
+- El compilador crea una tabla virtual (vtable) por cada clase que tiene al menos una función virtual. Esta vtable es una matriz estática que contiene punteros a la definición más específica de cada función virtual disponible para la clase.   
+- Creación del vptr: Cada objeto de una clase con funciones virtuales recibe un puntero oculto, llamado vptr, como parte de sus datos. Este vptr se inicializa para que apunte a la vtable de la clase del objeto. 
+
+### Uso de punteros y referencias  
+
+- El tamaño de la instancia crece solo lo que ocupa el puntero a función, la función suele ocupar el mismo tamaño que un puntero normal (4 bytes en sistemas de 32 bits, 8 bytes en 64 bits) y las funciones estáticas (staticFunction) no se almacenan en el objeto, se almacenan en la sección de código del programa. Ademas el tamaño de la instancia no cambia aunque tengas funciones estáticas o normales: lo que cambia es si agregas o no miembros (como el puntero).  
+
+- "funcPtr" almacena la dirección en memoria de la función asignada (en este caso staticFunction), esa dirección apunta al bloque de código máquina correspondiente a la función, no guarda una copia de la función, sino simplemente la referencia a dónde está definida en la memoria de código.  
+
+- se usa un puntero a función normal, no un puntero a método de instancia, En clases con herencia polimorfica, el compilador genera una vtable (tabla de funciones virtuales). Cada objeto contiene un puntero oculto a esa tabla para saber qué implementación ejecuta.  
+
+En rendimiento, la diferencia respecto a llamadas directas es mínima, aunque en casos críticos puede ser relevante.
+
+#### Según chajepete  
+
+Si solo necesitas funciones "libres", usa punteros a función (más simples y más pequeños).
+Si necesitas enlazar comportamiento dependiente de un objeto, usa punteros a métodos miembro (más flexibles, aunque un poquito más costosos).  
+
+### Reflexión   
+mientras hacia este punto descubri que:
+- cuándo usar herencia, punteros o funciones estáticas.
+- evitar abusar del polimorfismo donde no hace falta.
+- diseñar sistemas más rápidos y predecibles en consumo de recursos.
