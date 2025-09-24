@@ -167,3 +167,62 @@ mientras hacia este punto descubri que:
 - cuándo usar herencia, punteros o funciones estáticas.
 - evitar abusar del polimorfismo donde no hace falta.
 - diseñar sistemas más rápidos y predecibles en consumo de recursos.
+
+# Sección 3
+
+## Herencia y la Relación en Memoria  
+
+¿Cómo los objetos derivados contienen los datos de las clases base?:   
+Cuando defines una clase derivada en C++ (u otros lenguajes similares), el objeto de la clase derivada contiene en su interior la parte correspondiente a la clase base, en memoria, obj tiene primero el bloque de datos de Base (con x) y después los de Derivada (con y), así que un objeto derivado "contiene" al objeto base como su primera parte.
+
+Desplazamiento en memoria      
+cuando se construye el objeto derivado, los atributos de la clase base se ubican primero en memoria (respetando alineación/padding), y luego siguen los de la clase derivada.  
+- a y b (de Base) aparecen primero.  
+- Luego c (de Derivada) está después.  
+Esto se llama desplazamiento en memoria: los atributos de la base ocupan los primeros bytes, y los de la derivada se agregan al final.  
+
+### ¿Cómo se organizan los atributos en memoria?:   
+En memoria, d se organiza como si tuviera todos los atributos de Base seguidos por los de Derived, en orden de herencia y después en orden de declaración.  
+
+- &d  coincide con &(d.baseVar) porque el primer miembro del objeto es el subobjeto Base.
+- &(d.baseVar)  primera posición en memoria.
+- &(d.derivedVar)  después de baseVar (respetando alineación/padding).
+
+### ¿Qué sucede si agregamos más niveles de herencia?  
+
+el orden seria:
+
+- Primero los miembros de la clase base más lejana (A).  
+-  Luego los de la siguiente clase base (B).  
+- Finalmente los de la clase más derivada (C).   
+
+y tambien:
+
+- &obj == &(obj.a) (porque el subobjeto más base empieza en la misma dirección).  
+- &(obj.b) estará después de a.  
+- &(obj.c) estará después de b.  
+
+### Según chajepete  
+
+- 1. Organización en memoria de clases sin herencia
+
+En C++, cuando defines una clase, sus atributos (variables miembro) se almacenan en memoria de manera contigua dentro de cada objeto.
+
+- 2. Con herencia (sin polimorfismo)
+
+Cuando una clase hereda de otra, los atributos de la clase base se almacenan primero, como si fueran la primera parte del objeto derivado.
+Después se colocan los atributos de la clase derivada.
+
+- 3. Con polimorfismo (herencia con métodos virtuales)
+
+Cuando la clase base tiene al menos una función virtual, aparece en memoria un puntero oculto llamado vptr (Virtual Table Pointer), que apunta a la tabla de funciones virtuales (vtable).
+
+- 4. Puntos clave
+
+Los atributos de la clase base forman la primera parte del objeto derivado.
+
+Luego vienen los atributos propios de la clase derivada.
+
+Si hay funciones virtuales, aparece un puntero oculto vptr en la parte inicial (su ubicación puede variar según el compilador, pero suele estar al comienzo).
+
+Los accesos como &d == &d.baseVar suelen ser verdaderos si no hay herencia múltiple ni virtual, porque el primer miembro del objeto derivado es la base.
