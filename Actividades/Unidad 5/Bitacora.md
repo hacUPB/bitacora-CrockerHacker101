@@ -226,3 +226,7 @@ Luego vienen los atributos propios de la clase derivada.
 Si hay funciones virtuales, aparece un puntero oculto vptr en la parte inicial (su ubicación puede variar según el compilador, pero suele estar al comienzo).
 
 Los accesos como &d == &d.baseVar suelen ser verdaderos si no hay herencia múltiple ni virtual, porque el primer miembro del objeto derivado es la base.
+
+### Reto we
+
+
