@@ -229,4 +229,5 @@ Los accesos como &d == &d.baseVar suelen ser verdaderos si no hay herencia múlt
 
 ### Reto we
 
+la idea del reto es la siguiente, pienso hacer un generado de figuras en OpenFrameworks, mi idea es que una bolita siga al cursor del mouse (nada mas para chicanear), y quiero q al presionar la tecla "G" se cree una figura aleatoria y que esta se expanda y se desvanesca en la pantalla, y tambien, quiero que al presionar la tecla "H" se cree una figura aletorea que palpite pero que esta vez se quede en la pantalla y que no desaparesca, que se quede ahi hasta que yo con la tecla "SPACE" reiniicie la pantalla a su estado inicial.
 
