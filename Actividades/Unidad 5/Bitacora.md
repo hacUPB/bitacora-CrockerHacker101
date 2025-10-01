@@ -74,7 +74,6 @@ En este caso los datos NO afectan al tamaño de la instancia, lo que afecta al t
 - en los estaticos solo hay una copia en toda la clase, sin importar el numero de instancias, mientras que en las dinamicas cada instancia puede tener su propia copia de la clase en la memoria heap.  
 - en los datos estaticos su tiempo de vida es desde que inicia el programa hasta que da por finalizado, mientras que en los dinamicos "viven" desde que se inicia el programa hasta que se ponga (delete), y si no se libera hay una fuga de memoria.
 
-
 ### Prompt para ChatGPT: explícame cómo el uso de variables estáticas y dinámicas en una clase afecta el tamaño de sus instancias. ¿Las variables estáticas ocupan espacio en cada objeto?  
 
 ***Variables normales:***  
@@ -227,7 +226,107 @@ Si hay funciones virtuales, aparece un puntero oculto vptr en la parte inicial (
 
 Los accesos como &d == &d.baseVar suelen ser verdaderos si no hay herencia múltiple ni virtual, porque el primer miembro del objeto derivado es la base.
 
+### Polimorfismo y Vtables en detalle
+
+El **polimorfismo dinámico** en C++ permite que una misma llamada a función
+(ejemplo: `animal->makeSound()`) ejecute diferentes implementaciones
+según el **tipo dinámico** del objeto. Esto se implementa con `vptr` y `vtable`.
+
+---
+
+Ejemplo en código
+
+```cpp
+#include <iostream>
+
+class Animal {
+public:
+    virtual void makeSound() {
+        std::cout << "Some generic sound" << std::endl;
+    }
+};
+class Dog : public Animal {
+public:
+    void makeSound() override {
+        std::cout << "Bark" << std::endl;
+    }
+};
+class Cat : public Animal {
+public:
+    void makeSound() override {
+        std::cout << "Meow" << std::endl;
+    }
+};
+
+int main() {
+    Animal* animals[] = { new Dog(), new Cat() };
+    for (Animal* animal : animals) {
+        animal->makeSound();
+    }
+}
+```
+
+**Salida:**
+```
+Bark
+Meow
+```  
+¿Cómo funcionan las Vtables?  
+
+Cuando declaras un método `virtual`:  
+
+1. El compilador genera una **vtable** (tabla de punteros a funciones).
+2. Cada objeto guarda un puntero oculto (**vptr**) que apunta a la vtable
+   de su tipo dinámico.
+3. En la llamada `animal->makeSound()`:
+   - Se sigue el `vptr` dentro del objeto.
+   - Se consulta la `vtable`.
+   - Se ejecuta la función correspondiente.
+     
+Impacto en rendimiento   
+
+- Impacto en tiempo: pequeño, unas pocas instrucciones más que una llamada normal.  
+- Impacto en memoria: mínimo, un puntero extra por objeto + la vtable por clase.  
+- En la mayoría de los programas: la diferencia es irrelevante.   
+- En contextos críticos de performance: conviene evaluar alternativas como plantillas (polimorfismo estático) o técnicas de devirtualization.  
+
+### Según chajepete:   
+El polimorfismo en C++ funciona porque cada clase con métodos virtuales tiene una vtable, y cada objeto guarda un vptr que apunta a la vtable de su clase concreta. Cuando llamas a un método virtual, se consulta la vtable y se resuelve dinámicamente cuál función ejecutar.
+
+### ¿Cómo se implementan internamente el encapsulamiento, la herencia y el polimorfismo?
+
+ Encapsulamiento
+- Es solo una **regla del compilador**.  
+- `private`, `protected` y `public` no cambian la memoria del objeto.  
+- Solo definen **quién puede acceder** a los miembros.  
+
+ Herencia
+- La clase derivada guarda primero los atributos de la base y luego los suyos.  
+- Permite que un puntero a la base apunte al inicio de la derivada.  
+- Con herencia múltiple/virtual se añaden **punteros u offsets extra**. 
+
+Polimorfismo
+- Cada clase con métodos `virtual` tiene una **vtable** (tabla de punteros a funciones).  
+- Cada objeto tiene un **vptr** oculto que apunta a la vtable de su tipo real.  
+- Al llamar un método virtual:
+  - Se consulta el `vptr`.  
+  - Se sigue a la vtable.  
+  - Se ejecuta la función correcta.  
+
+### Análisis: ventajas y desventajas en términos de eficiencia y complejidad.
+
+Ventajas:  
+
+- Encapsulamiento: seguro, barato, casi sin desventajas.   
+- Herencia: muy útil pero puede volver la jerarquía difícil de mantener y en casos de herencia múltiple/virtual añade costos extra.  
+- Polimorfismo: ofrece gran flexibilidad, con un costo bajo pero real en tiempo y memoria; su mayor riesgo está en la complejidad del diseño y mantenimiento.  
+
+Desventajas:   
+
+- Encapsulamiento: casi sin costo, sus problemas son de diseño, no de eficiencia.  
+- Herencia: costo moderado en memoria/tiempo cuando es múltiple o virtual, pero principalmente complejidad en diseño.  
+- Polimorfismo: costo bajo pero constante en tiempo y memoria, y aumenta la dificultad de depuración.  
+
 ### Reto we
 
 la idea del reto es la siguiente, pienso hacer un generado de figuras en OpenFrameworks, mi idea es que una bolita siga al cursor del mouse (nada mas para chicanear), y quiero q al presionar la tecla "G" se cree una figura aleatoria y que esta se expanda y se desvanesca en la pantalla, y tambien, quiero que al presionar la tecla "H" se cree una figura aletorea que palpite pero que esta vez se quede en la pantalla y que no desaparesca, que se quede ahi hasta que yo con la tecla "SPACE" reiniicie la pantalla a su estado inicial.
-
