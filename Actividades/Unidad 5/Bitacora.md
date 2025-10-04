@@ -334,4 +334,4 @@ la idea del reto es la siguiente, pienso hacer un generado de figuras en OpenFra
 
 ### link del video:  
 
-
+https://youtu.be/DZYNDt3KF1Y
