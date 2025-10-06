@@ -71,3 +71,18 @@ Estados que existen son los siguientes:
 La partícula tiene un puntero a su estado actual (state), luego, en cada frame (update()), delega el comportamiento a ese estado despues cuando se presiona una tecla (a, r, s, n), el estado de todas las partículas cambia (setState(...)).  
 
 Así, el comportamiento cambia en tiempo real sin modificar el código principal de Particle.
+
+### Modificación del codigo original:
+
+lo que hice fue agregarle unas cuantas funciones y detalles para hacerlo un poco diferente al codigo original.   
+Lo que agrege fue:  
+
+A: modo atracción  
+R: modo repulsión  
+S: detener  
+N: normal  
+E: explosión  
+ademas las particulas ahora son cometas.  
+
+Prueba video:  
+
