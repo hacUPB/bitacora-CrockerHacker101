@@ -91,7 +91,12 @@ una maya ondulada de color azul we, decidi por ponerle un color veige mas o meno
 Un uniform es una variable que permite enviar info desde el programa hacia los shaders, de modo que todos los vertices o fragmentos usen el mismo valor durante un cuadro. A diferencia de las variables que cambian por pixel o vertice, un uniform mantiene un valor constante mientras ejecuta este shader. Esto permite que se puedan pasar valores como el tiempo, la posicion del mouse o el tamaño de la ventana para generar animaciones o efectos visuales dinamicos
 
 
+# Actividad 4
+### ¿Que hace el codigo de ejemplo?  
+El codigo dado crea una especie de animación que tiene unos colores que van cambiando, el shader se encarga de enviar datos del tiempo con (ofGetElapsedTimed()), el vertex del tiempo lo so para modificar los color y asi genero un patron para que de el efecto visual.
 
+### ¿Cómo funciona el código de aplicación, los shaders y cómo se comunican estos?
+La aplicación carga el shader, actualiza el tiempo y lo envía como uniform para generar una animación. En setup() se carga el shader, y en draw() se activa, se pasa el tiempo con setUniform1f("time", ofGetElapsedTimef()), y se dibuja una figura. El vertex shader calcula la posición de los vértices y el fragment shader usa el tiempo para cambiar los colores con funciones, creando efectos visuales animados.
 
 
 
