@@ -83,3 +83,6 @@ shader.end();
 R/ esto es porque la CPU activa el programa de shaders en la GPU y le dice “usa este programa para los próximos vértices y fragmentos” esto en shader.begin().    
 o en plane.draw() hace que la CPU le dice a la GPU “dibuja estos vertices", OpenFrameworks envia una orden glDrawArrays o glDrawElements, y la GPU procesa los vértices, ejecuta el vertex shader para cada uno, y luego el fragment shader para cada pixel.  
 tambien en shader.end() la CPU le dice a la GPU que pare.
+
+Link del video de muestra:  
+https://youtu.be/kkFpYFBDZY0  
