@@ -113,41 +113,200 @@ Paneles como:
 
 # Actividad 2
 
-
+si lo entendi.
 
 # Actividad 3  
+Codigo del punto 20 img 18
 
-- **paso 1** : hacemos el dibujito en el editor.
-- **paso 2** : copiamos el código dado por el editor para que se dibuje en el nand2tetris.
-- **paso 3** : en el código debemos buscar la linea final donde acaba de dibujar
-- **paso 4** : después ponemos un loop que provoque que la pantalla quede en blanco (tiene que tener todos los binaros en 0 para que se quede en blanco).
-- **paso 5** : el código hace un loop en: 
-  ~~~
-  @13  
-  A=M   
-  D;JMP   
-  y ponemos este código:  
-  // Borrar la pantalla   
-  @SCREEN  
-  D=A  
-  @0  
-  M=D  
-  @8192  
-  D=A  
-  @R1  
-  M=D  
-  (BORRAR_PANTALLA)  
-  @R0  
-  A=M  
-  M=0  
-  @R0  
-  M=M+1  
-  @R1  
-  M=M-1  
-  D=M  
-  @BORRAR_PANTALLA  
-  D;JGT
-  ´´´  
-- **paso 6**: ponemos @screen para ponernos en la variable de screen, despues declaramos 0 en D, luego guardamos esa dirección en 0 (puntero a donde vamos a escribir). ponemos @8192 ya que ese es el tamaño en pixeles de la pantalla y luego guardamos r1, luego sigue el bucle que borra lo de la pantalla  
+
+<img width="1785" height="1063" alt="Captura de pantalla 2025-11-15 151246" src="https://github.com/user-attachments/assets/5d3fda41-1a7e-4780-940c-94950f5aa2f7" />
+
+
+~~~
+// ASCII de 'd' = 100 decimal
+
+(LOOP)
+    // Leer teclado
+    @KBD
+    D=M
+    @100      // ASCII 'd'
+    D=D-A
+    @DRAW
+    D;JEQ     // si D == 0 → tecla 'd' presionada
+
+// Si NO se presiona 'd': borrar
+(CLEAR)
+    @SCREEN
+    D=A
+    @addr
+    M=D        // addr = SCREEN
+
+    @8
+    D=A
+    @rows
+    M=D        // 8 filas a borrar
+
+(CLEAR_LOOP)
+    @addr
+    A=M
+    M=0        // borrar fila
+
+    @addr
+    D=M
+    @32
+    D=D+A      // siguiente fila gráfica
+    @addr
+    M=D
+
+    @rows
+    MD=M-1
+    @CLEAR_LOOP
+    D;JGT
+
+    @LOOP
+    0;JMP
+
+
+// Cuando se presiona 'd', dibujar imagen 8x8
+(DRAW)
+    @SCREEN
+    D=A
+    @addr
+    M=D        // addr = SCREEN
+
+    @8
+    D=A
+    @rows
+    M=D        // 8 filas
+
+(DRAW_LOOP)
+    @255       // 11111111 en binario → 8 píxeles negros
+    D=A
+    @addr
+    A=M
+    M=D        // pinta fila
+
+    @addr
+    D=M
+    @32
+    D=D+A
+    @addr
+    M=D        // siguiente fila
+
+    @rows
+    MD=M-1
+    @DRAW_LOOP
+    D;JGT
+
+    @LOOP
+    0;JMP
+~~~
 
 # Actividad 4
+
+Variacion del programa: 
+
+d = 100
+e = 101
+
+~~~ 
+// d → dibuja
+// e → borra
+
+(LOOP)
+    // Leer teclado
+    @KBD
+    D=M            // D = código ASCII o 0
+
+    // ¿Se presionó 'd'? (100)
+    @100
+    D=D-A
+    @DRAW
+    D;JEQ          // Si D == 0 → presionaron 'd'
+
+    // Volver a leer teclado porque modificamos D
+    @KBD
+    D=M
+
+    // ¿Se presionó 'e'? (101)
+    @101
+    D=D-A
+    @CLEAR
+    D;JEQ          // Si D == 0 → presionaron 'e'
+
+    // Si ninguna de las dos teclas: seguir en loop
+    @LOOP
+    0;JMP
+
+
+// -----------------------------------------
+// DIBUJAR IMAGEN 8x8  (de reto 18)
+// -----------------------------------------
+(DRAW)
+    @SCREEN
+    D=A
+    @addr
+    M=D           // addr = SCREEN
+
+    @8
+    D=A
+    @rows
+    M=D           // 8 filas a dibujar
+
+(DRAW_LOOP)
+    @255          // 8 pixeles negros: 11111111
+    D=A
+    @addr
+    A=M
+    M=D           // dibujar fila
+
+    @addr
+    D=M
+    @32
+    D=D+A         // avanzar 32 palabras = una fila visual
+    @addr
+    M=D
+
+    @rows
+    MD=M-1        // rows--
+    @DRAW_LOOP
+    D;JGT
+
+    @LOOP
+    0;JMP
+
+
+// -----------------------------------------
+// BORRAR IMAGEN 8x8
+// -----------------------------------------
+(CLEAR)
+    @SCREEN
+    D=A
+    @addr
+    M=D          // addr = SCREEN
+
+    @8
+    D=A
+    @rows
+    M=D          // 8 filas a borrar
+
+(CLEAR_LOOP)
+    @addr
+    A=M
+    M=0          // borrar fila
+
+    @addr
+    D=M
+    @32
+    D=D+A
+    @addr
+    M=D          // siguiente fila gráfica
+
+    @rows
+    MD=M-1
+    @CLEAR_LOOP
+    D;JGT
+
+    @LOOP
+    0;JMP
+~~~
