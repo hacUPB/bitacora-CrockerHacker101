@@ -22,16 +22,29 @@ Un computador moderno se compone principalmente de:
 # Actividad 2 (Bitácora)
 
 ## ¿Qué es entonces un programa?
-Un programa es un conjunto de instrucciones escritas en un lenguaje de programacion que una computadora puede interpretar y ejecutar para realizar una tarea especifica.
+Un programa es un conjunto de instrucciones que le dicen a la computadora qué hacer paso a paso, Estas instrucciones siguen reglas muy específicas para que el hardware pueda entenderlas y ejecutarlas.  
 
 ## ¿Qué es un lenguaje ensamblador?
 Un lenguaje ensamblador (Assembly) es un lenguaje de bajo nivel que traduce directamente a instrucciones comprensibles por la CPU, pero usando palabras clave simbolicas en lugar de solo números binarios. Es más entendible para los humanos que el lenguaje de máquina, pero sigue estando muy cerca del hardware.
 
 Ejemplo de una instrucción en ensamblador:
+~~~
+@10
+D=A
+~~~
 
-## MOV AX, 5 ; Mueve el valor 5 al registro AX
+## ¿Qué es lenguaje de máquina  
 
-# Actividad 3  
+El lenguaje de máquina es el lenguaje real que entiende el procesador, está compuesto solo por ceros y unos (binario).
+Cada patrón de bits activa circuitos dentro del CPU, por eso es el nivel más bajo de programación.
+
+Ejemplo:
+~~~
+0000000000001010   // versión binaria de @10
+1110110000010000   // versión binaria de D=A
+~~~
+
+# Actividad 3   
 ## ¿Qué son PC, D y A?  
 - **Personal Computer**: Computadora personal. Es un dispositivo electrónico usado por una sola persona a la vez, con capacidad para ejecutar programas, navegar por internet, jugar videojuegos, etc.  
 - **A** = Acumulador  
@@ -43,3 +56,28 @@ Nombre del registro: DX, EDX o RDX.
 Se usa para operaciones que requieren un segundo registro junto con AX/EAX/RAX.  
 Por ejemplo:  
 En multiplicaciones y divisiones, DX se usa para almacenar parte del resultado (como el residuo).
+
+# Actividad 4  
+
+Considera el siguiente fragmento de código en lenguaje ensamblador:  
+```bash
+@16384
+D = A
+@16
+M = D
+```
+El resultado de este programa es que guarda en la posición 16 de la RAM el valor 16384. Ahora escribe un programa en lenguaje ensamblador que guarde en la posición 32 de la RAM un 100.  
+
+# Actividad 5  
+
+Resumen:
+
+Resumen breve
+
+este explica como funciona el CPU del computador Hack y cómo ejecuta un programa. el CPU trabaja en un ciclo donde toma una instrucción, la interpreta y la ejecuta. Está formado por la ALU, los registros A y D, y el Program Counter, los cuales coordinan los cálculos y el avance del programa.  
+También hablo que existen dos tipos de instrucciones:
+
+- A-instructions, que cargan valores o direcciones en el registro A.  
+- C-instructions, que realizan operaciones, almacenan resultados o hacen saltos.  
+
+y tambien la instrucción está codificada en bits, y el CPU las decodifica para saber exactamente qué acción debe realizar.  
